@@ -1,0 +1,14 @@
+# node.js
+
+node_modules
+.vscode
+
+# js testing
+
+coverage
+
+# build/output directories
+
+build
+dist
+out
