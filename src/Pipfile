@@ -13,6 +13,8 @@ nodeenv = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 python-decouple = "*"
+psycopg2-binary = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.8"
