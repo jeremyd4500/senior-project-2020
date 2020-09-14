@@ -12,3 +12,6 @@ coverage
 build
 dist
 out
+
+# Decouple, avoid commiting sensity data to the repository
+/src/backend/.env
