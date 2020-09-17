@@ -13,5 +13,5 @@ build
 dist
 out
 
-# Decouple, avoid commiting sensity data to the repository
+# Decouple, avoid commiting sensitive data to the repository
 /src/backend/.env
