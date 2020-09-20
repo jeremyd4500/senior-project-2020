@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Appointment(models.Model):
@@ -10,8 +11,11 @@ class Appointment(models.Model):
     FirstName = models.CharField(max_length=30)
     LastName = models.CharField(max_length=30)
     Age = models.IntegerField()
+    email = models.EmailField(max_length=254, blank=True)
     Date = models.DateField(auto_now=True)
-    Time = models.TimeField(auto_now=True)
+    ap_date = models.DateField(blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    Time = models.TimeField(blank=True)
     Gender = models.CharField(max_length=1, choices=GENDER)
     description = models.TextField()
 

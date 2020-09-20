@@ -64,9 +64,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-               <li class="nav-item text-black">
-                            <a class="nav-link text-black font-weight-bold" href="{% url 'appointment' %}">Appointment</a>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'logout' %}">Logout</a>
                         </li>
+
+                       <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'appointment' %}">Appointment</a>
+                       </li>
+
+                    {% else %}
+                        <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'login' %}">Login</a>
+                        </li>
+
+                        <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+
+
                     <li class="nav-item text-black">
                             <a class="nav-link text-black font-weight-bold" href="{% url 'about' %}">About Us</a>
                         </li>
@@ -87,7 +104,7 @@
 
 
     <footer class="footer py-3 bg-grey">
-        <p class="m-0 text-dark text-center">Copyright &copy; The Kodechamp</p>
+        <p class="m-0 text-dark text-center">Copyright &copy; Telemed</p>
     </footer>
 </body>
 </html>

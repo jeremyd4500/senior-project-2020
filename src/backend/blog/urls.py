@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from Appointments import views as appointment
+from authentication import views as authentication
 
 
 urlpatterns = [
