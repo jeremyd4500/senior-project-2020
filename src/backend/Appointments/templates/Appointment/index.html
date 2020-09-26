@@ -1,15 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Appointments:
-<hr>
+{% extends 'blog/base.html' %}
+{% block content %}
 
-Appointments Homepage:
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
 
-<h1>Under Construction<h1>
-</body>
-</html>
+    .head_text{
+        color: white;
+    }
+
+    .card{
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+
+
+                    <h3 class=" site-heading my-4 mt-3 text-white">
+                     {% if user.is_authenticated %}
+                        Welcome {{ user.username }}
+                        {% else %}
+                        Welcome 
+                        {% endif %}
+                    </h3>
+                    <p class="text-light">Appointment Homepage &nbsp
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+{% endblock content %}
