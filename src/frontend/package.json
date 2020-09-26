@@ -7,7 +7,7 @@
 		"build": "webpack --config webpack.prod.js",
 		"format": "prettier --write \"**/**.{js,jsx,json,css,less}\"",
 		"jest": "jest --coverage",
-		"start": "webpack-dev-server --hot --config webpack.dev.js"
+		"start": "webpack-dev-server --hot --open --config webpack.dev.js"
 	},
 	"author": "",
 	"license": "ISC",
@@ -44,9 +44,11 @@
 		"prop-types": "^15.7.2",
 		"react": "^16.9.0",
 		"react-axe": "^3.3.0",
+		"react-date-picker": "^8.0.3",
 		"react-dom": "^16.9.0",
-		"react-focus-lock": "^2.2.0",
+		"react-focus-lock": "^2.4.1",
 		"react-router": "3.2.4",
+		"react-select": "^3.1.0",
 		"style-loader": "^1.0.0",
 		"terser-webpack-plugin": "^2.1.0",
 		"url-loader": "^3.0.0",

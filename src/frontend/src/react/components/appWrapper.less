@@ -1,0 +1,67 @@
+.AppWrapper {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+
+	.AppWrapper__welcome {
+		width: 75%;
+		border-right: 1px solid white;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&-branding {
+			width: 50%;
+			height: 50%;
+			padding-top: 20px;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			border: 1px solid white;
+			border-radius: 20px;
+
+			&-img {
+				width: 50%;
+			}
+
+			&-name {
+				font-family: Bebas;
+				font-size: 48pt;
+				margin-top: 35px;
+				margin-bottom: 0px;
+				font-weight: 600;
+			}
+
+			&-motto {
+				font-family: Bebas;
+				font-size: 16pt;
+			}
+		}
+	}
+
+	.AppWrapper__form-gradient {
+		@from: #7ea3c1;
+		@to: #0f181f;
+
+		background: -moz-linear-gradient(top, @from 0%, @to 100%);
+		background: -webkit-linear-gradient(top, @from 0%, @to 100%);
+		background: linear-gradient(to bottom, @from 0%, @to 100%);
+	}
+
+	.AppWrapper__form {
+		height: 100%;
+		width: 25%;
+
+		.AppWrapper__form-gradient;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
