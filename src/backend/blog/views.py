@@ -6,14 +6,14 @@
 from .models import Post
 from .serializers import PostSerializer
 from rest_framework import status, generics, mixins
-from rest_framework.authentication import BasicAuthentication #TokenAuthentication
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 class PostList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    authentication_classes = [BasicAuthentication]#TokenAuthentication,
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [BasicAuthentication,TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
 
     def get(self,request):
         return self.list(request)
@@ -25,8 +25,8 @@ class PostList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPI
 class PostDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,generics.GenericAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    authentication_classes = [BasicAuthentication] #TokenAuthentication,
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [BasicAuthentication] #TokenAuthentication,
+    #permission_classes = [IsAuthenticated]
 
     def get(self,request,pk):
         return self.retrieve(request, pk)
