@@ -21,7 +21,7 @@ class AppointmentList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.Gen
 class AppointmentDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,generics.GenericAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-    authentication_classes = [TokenAuthentication,BasicAuthentication]#BasicAuthentication,
+    authentication_classes = [TokenAuthentication,BasicAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self,request,pk):
