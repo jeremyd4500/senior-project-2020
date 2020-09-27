@@ -8,7 +8,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 library.add(fab);
 
 import App from 'react/App';
-import 'less/styles.less';
+import 'index.less';
 
 axe(React, ReactDOM, 1000);
 

@@ -59,7 +59,7 @@ module.exports = {
 				resolve: { extensions: ['.js', '.jsx'] }
 			},
 			{
-				test: /\.less$/,
+				test: /\.(less|css)$/,
 				use: [
 					{
 						loader: 'style-loader'
