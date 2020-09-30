@@ -31,7 +31,16 @@ class Appointment(models.Model):
     def __str__(self):
         return (self.FirstName +" " +self.LastName)
 
-# class Report(models.Model):
+class Report(models.Model):
+    bp = models.IntegerField()
+    temperature = models.DecimalField(max_digits=5, decimal_places=2)
+    bmi = models.DecimalField(max_digits=5, decimal_places=2)
+    pulse = models.IntegerField()
+    weight = models.IntegerField()
+    respiration = models.IntegerField()
+    height = models.IntegerField()
+    oxygen_saturation = models.IntegerField()
+
 
 
 
