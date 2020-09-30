@@ -11,7 +11,7 @@ urlpatterns = [
     path('appointment/', include('Appointments.urls')),
     path('blog/', include('blog.urls')),
     path('auth/', include('authapp.urls')),
-    #path('', include('telemed.urls')),
+    path('report/', include('Appointments.urls')),
     #path('rest/',views.AppointmentList.as_view()),
     #path('authentication/', include('django.contrib.auth.urls')),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
