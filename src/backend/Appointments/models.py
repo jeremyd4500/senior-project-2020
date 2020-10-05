@@ -40,6 +40,7 @@ class Report(models.Model):
     respiration = models.IntegerField()
     height = models.IntegerField()
     oxygen_saturation = models.IntegerField()
+    date = models.DateField(auto_now=True)
 
 
 

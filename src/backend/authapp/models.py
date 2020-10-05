@@ -74,7 +74,7 @@ class User(AbstractUser):
     phone = models.CharField(null=True, max_length=255)
     address = models.CharField(null=True, max_length=255)
     city = models.CharField(null=True, max_length=255)
-    state = models.CharField(null=True, max_length=255, choices=STATES)
+    state = models.IntegerField(null=True, choices=STATES)
     user_role = models.IntegerField(choices=STATUS, default=2)
     date_of_birth = models.DateField(blank=True)
     REQUIRED_FIELDS = ['first_name','last_name','sex','date_of_birth','email','phone','user_role','address','city','state']
