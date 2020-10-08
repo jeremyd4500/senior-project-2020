@@ -21,7 +21,7 @@ class Appointment(models.Model):
     email = models.EmailField(max_length=254, blank=True)
     Date = models.DateField(auto_now=True)
     appointment_date = models.DateField(blank=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #author = models.ForeignKey(User, on_delete=models.CASCADE)
     Time = models.TimeField(blank=True)
     Gender = models.CharField(max_length=1, choices=GENDER)
@@ -41,6 +41,7 @@ class Report(models.Model):
     height = models.IntegerField()
     oxygen_saturation = models.IntegerField()
     date = models.DateField(auto_now=True)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 

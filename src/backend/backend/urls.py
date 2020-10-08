@@ -12,6 +12,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('auth/', include('authapp.urls')),
     path('report/', include('Appointments.urls')),
+    path('messages/', include("django_messages_drf.urls")),#, namespace="django_messages_drf
+    #path(r'^messages-drf/', include("django_messages_drf.urls")),#, namespace="django_messages_drf
     #path('rest/',views.AppointmentList.as_view()),
     #path('authentication/', include('django.contrib.auth.urls')),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
