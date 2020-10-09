@@ -13,6 +13,11 @@ build
 dist
 out
 
+# pip libraries
+
+/src/env
+*.pyc
+
 # Decouple, avoid commiting sensitive data to the repository
 /src/backend/.env
 db.sqlite3
