@@ -11,7 +11,7 @@ urlpatterns = [
     path('appointment/', include('Appointments.urls')),
     path('blog/', include('blog.urls')),
     path('auth/', include('authapp.urls')),
-    path('report/', include('Appointments.urls')),
+    path('report/', include('report.urls')),
     path('messages/', include("django_messages_drf.urls")),#, namespace="django_messages_drf
     #path(r'^messages-drf/', include("django_messages_drf.urls")),#, namespace="django_messages_drf
     #path('rest/',views.AppointmentList.as_view()),

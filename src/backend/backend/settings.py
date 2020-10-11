@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'blog',
     'authapp',
     'django_messages_drf',
+    'report',
 ]
 
 MIDDLEWARE = [

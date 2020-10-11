@@ -21,8 +21,8 @@ class Appointment(models.Model):
     email = models.EmailField(max_length=254, blank=True)
     Date = models.DateField(auto_now=True)
     appointment_date = models.DateField(blank=True)
+    #user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    #author = models.ForeignKey(User, on_delete=models.CASCADE)
     Time = models.TimeField(blank=True)
     Gender = models.CharField(max_length=1, choices=GENDER)
     status = models.IntegerField(choices=STATUS, default=0)
@@ -31,17 +31,6 @@ class Appointment(models.Model):
     def __str__(self):
         return (self.FirstName +" " +self.LastName)
 
-class Report(models.Model):
-    bp = models.IntegerField()
-    temperature = models.DecimalField(max_digits=5, decimal_places=2)
-    bmi = models.DecimalField(max_digits=5, decimal_places=2)
-    pulse = models.IntegerField()
-    weight = models.IntegerField()
-    respiration = models.IntegerField()
-    height = models.IntegerField()
-    oxygen_saturation = models.IntegerField()
-    date = models.DateField(auto_now=True)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 

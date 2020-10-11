@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Appointment, Report
+from .models import Appointment
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +17,4 @@ class AppointmentSerializer(serializers.ModelSerializer):
         # 'Gender',
         # 'description'
 
-class ReportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Report
-        fields = '__all__'
+
