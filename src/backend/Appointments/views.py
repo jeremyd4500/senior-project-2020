@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 class AppointmentList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
 
     def get(self,request):
         return self.list(request)
