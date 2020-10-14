@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import AppWrapper from 'react/components/AppWrapper';
 import { PATHS } from 'utils';
 
-import './loginContainer.less';
-
 const LoginContainer = (props) => {
 	const [email, setEmail] = React.useState(null);
 	const [password, setPassword] = React.useState(null);

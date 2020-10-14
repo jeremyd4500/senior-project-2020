@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import AppWrapper from 'react/components/AppWrapper';
 import { PATHS } from 'utils';
 
-import './forgotPasswordContainer.less';
-
 const ForgotPasswordContainer = (props) => {
 	const [email, setEmail] = React.useState(null);
 

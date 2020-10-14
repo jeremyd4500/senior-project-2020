@@ -2,8 +2,6 @@ import React from 'react';
 import FocusLock from 'react-focus-lock';
 import PropTypes from 'prop-types';
 
-import './appWrapper.less';
-
 const AppWrapper = ({ children, className }) => {
 	return (
 		<div className='AppWrapper'>

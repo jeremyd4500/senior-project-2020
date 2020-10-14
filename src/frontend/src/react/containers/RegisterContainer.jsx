@@ -5,8 +5,6 @@ import AppWrapper from 'react/components/AppWrapper';
 import SelectMenu from 'react/components/SelectMenu';
 import { PATHS } from 'utils';
 
-import './registerContainer.less';
-
 const RegisterContainer = (props) => {
 	const [firstName, setFirstName] = React.useState(null);
 	const [lastName, setLastName] = React.useState(null);

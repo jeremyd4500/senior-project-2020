@@ -2,8 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 
-import './selectMenu.less';
-
 const SelectMenu = (props) => {
 	const parentClass = 'SelectMenu';
 	const selectClass = `${parentClass}__select`;
