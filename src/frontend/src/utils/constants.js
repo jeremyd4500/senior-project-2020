@@ -1,4 +1,4 @@
-const PATHS = {
+export const PATHS = {
 	// jsx paths
 	root: '/',
 
@@ -16,7 +16,7 @@ const PATHS = {
 	// api paths
 };
 
-const HEADER_TABS = {
+export const HEADER_TABS = {
 	home: [
 		{
 			label: 'Account',
@@ -35,9 +35,4 @@ const HEADER_TABS = {
 			path: PATHS.contact
 		}
 	]
-};
-
-module.exports = {
-	HEADER_TABS,
-	PATHS
 };
