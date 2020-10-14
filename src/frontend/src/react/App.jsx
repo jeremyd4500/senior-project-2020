@@ -7,6 +7,7 @@ import LoginContainer from 'react/containers/LoginContainer';
 import LandingContainer from 'react/containers/LandingContainer';
 import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
+import AccountContainer from 'react/containers/AccountContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
@@ -43,6 +44,12 @@ const routeConfig = {
 		{
 			path: PATHS.register,
 			component: RegisterContainer,
+			childRoutes: []
+			// onEnter: requireAuth
+		},
+		{
+			path: PATHS.account,
+			component: AccountContainer,
 			childRoutes: []
 			// onEnter: requireAuth
 		},
