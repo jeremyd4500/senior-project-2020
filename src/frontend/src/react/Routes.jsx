@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import { hot } from 'react-hot-loader/root';
+import React from 'react';
 import { Router, browserHistory } from 'react-router';
 
 import { PATHS } from 'utils';
@@ -16,6 +17,10 @@ const redirect = (nextState, replace, callback) => {
 
 const requireAuth = (nextState, replace, callback) => {
 	// validate auth here
+};
+
+const scrollTop = () => {
+	window.scrollTo(0, 0);
 };
 
 const routeConfig = {
@@ -60,10 +65,12 @@ const routeConfig = {
 	]
 };
 
-class App extends Component {
-	render() {
-		return <Router history={browserHistory} routes={routeConfig} />;
-	}
-}
+const Routes = () => (
+	<Router
+		onUpdate={scrollTop}
+		history={browserHistory}
+		routes={routeConfig}
+	/>
+);
 
-export default App;
+export default hot(Routes);

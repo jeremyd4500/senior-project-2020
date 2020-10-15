@@ -2,10 +2,7 @@
 
 node_modules
 .vscode
-
-# js testing
-
-coverage
+debug.log
 
 # build/output directories
 

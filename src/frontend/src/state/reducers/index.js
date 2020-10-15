@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
 import { USER_ACTIONS } from '../actions';
+
+import AppReducer from './AppReducer';
 import UserReducer from './UserReducer';
 
 const reducers = combineReducers({
+	app: AppReducer,
 	user: UserReducer
 });
 
