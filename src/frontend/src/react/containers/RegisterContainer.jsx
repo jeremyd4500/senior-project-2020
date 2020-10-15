@@ -4,14 +4,8 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-date-picker';
 import AppWrapper from 'react/components/AppWrapper';
 import SelectMenu from 'react/components/SelectMenu';
-import {
-	getSelectMenuOptionsArray,
-	getSelectMenuOptionsObject,
-	PATHS,
-	SEX,
-	STATES
-} from 'utils';
-import { registerUser } from 'state/actions';
+import { getSelectMenuOptionsObject, PATHS, SEX, STATES } from 'utils';
+import { appNavigate, registerUser } from 'state/actions';
 
 const RegisterContainer = (props) => {
 	const [firstName, setFirstName] = React.useState(null);
@@ -24,28 +18,26 @@ const RegisterContainer = (props) => {
 	const [address, setAddress] = React.useState(null);
 	const [city, setCity] = React.useState(null);
 	const [state, setState] = React.useState(null);
-	const [birthday, setBirthday] = React.useState(new Date());
+	const [dob, setDob] = React.useState(new Date());
 	const [sex, setSex] = React.useState(null);
-	const [heightFeet, setHeightFeet] = React.useState(null);
-	const [heightInches, setHeightInches] = React.useState(null);
-	const [weight, setWeight] = React.useState(null);
+	// const [heightFeet, setHeightFeet] = React.useState(null);
+	// const [heightInches, setHeightInches] = React.useState(null);
+	// const [weight, setWeight] = React.useState(null);
 
 	const isValid = () => {
 		if (
 			address &&
-			birthday &&
 			city &&
 			confirmPassword &&
+			dob &&
 			email &&
 			firstName &&
-			heightFeet &&
-			heightInches &&
 			lastName &&
 			password &&
 			phone &&
 			sex &&
 			username &&
-			weight
+			password === confirmPassword
 		) {
 			return true;
 		} else {
@@ -54,7 +46,7 @@ const RegisterContainer = (props) => {
 	};
 
 	const renderSexSelector = () => {
-		const options = getSelectMenuOptionsArray(SEX);
+		const options = getSelectMenuOptionsObject(SEX);
 		return (
 			<SelectMenu value={sex} handleChange={setSex} options={options} />
 		);
@@ -71,25 +63,28 @@ const RegisterContainer = (props) => {
 		);
 	};
 
-	console.log('############################');
-	console.log(props);
-	console.log({
-		address: address,
-		birthday: birthday,
-		city: city,
-		confirmPassword: confirmPassword,
-		email: email,
-		firstName: firstName,
-		heightFeet: heightFeet,
-		heightInches: heightInches,
-		lastName: lastName,
-		password: password,
-		phone: phone,
-		sex: sex,
-		state: state,
-		username: username,
-		weight: weight
-	});
+	const submit = () => {
+		const { appNavigate, registerUser } = props;
+		if (isValid()) {
+			const data = {
+				address: address,
+				date_of_birth: `${dob.getFullYear()}-${dob.getMonth() +
+					1}-${dob.getDate()}`,
+				city: city,
+				re_password: confirmPassword,
+				email: email,
+				first_name: firstName,
+				last_name: lastName,
+				password: password,
+				phone: phone,
+				sex: sex.value,
+				state: state.value,
+				username: username,
+				user_role: 2
+			};
+			registerUser(data, appNavigate);
+		}
+	};
 
 	return (
 		<AppWrapper className='RegisterContainer'>
@@ -196,7 +191,7 @@ const RegisterContainer = (props) => {
 						<label className='RegisterContainer__form-field-label'>
 							DATE OF BIRTH
 						</label>
-						<DatePicker onChange={setBirthday} value={birthday} />
+						<DatePicker onChange={setDob} value={dob} />
 					</div>
 					<div className='RegisterContainer__form-field multi'>
 						<label className='RegisterContainer__form-field-label'>
@@ -205,7 +200,7 @@ const RegisterContainer = (props) => {
 						{renderSexSelector()}
 					</div>
 				</div>
-				<div className='RegisterContainer__form-field-multi'>
+				{/* <div className='RegisterContainer__form-field-multi'>
 					<div className='RegisterContainer__form-field multi'>
 						<label className='RegisterContainer__form-field-label'>
 							HEIGHT
@@ -261,7 +256,7 @@ const RegisterContainer = (props) => {
 							</label>
 						</div>
 					</div>
-				</div>
+				</div> */}
 				<div className='RegisterContainer__form-field'>
 					<label className='RegisterContainer__form-field-label'>
 						PASSWORD
@@ -290,9 +285,7 @@ const RegisterContainer = (props) => {
 					<button
 						className='RegisterContainer__form-buttons-submit button'
 						disabled={!isValid()}
-						onClick={() => {
-							// authenticate
-						}}
+						onClick={submit}
 						type='submit'
 					>
 						Submit
@@ -309,8 +302,12 @@ const RegisterContainer = (props) => {
 	);
 };
 
-const mapDispatchToProps = {
-	registerUser
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		appNavigate: (path) => dispatch(appNavigate(path, ownProps.router)),
+		registerUser: (data, appNavigate) =>
+			dispatch(registerUser(data, appNavigate))
+	};
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(RegisterContainer));

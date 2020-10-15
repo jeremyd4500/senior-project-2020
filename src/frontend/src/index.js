@@ -15,7 +15,11 @@ import 'less/styles.less';
 // filter out react router warnings
 const orgError = console.error;
 console.error = (...args) => {
-	if (args && args[0].includes('You cannot change <Router routes>')) {
+	if (
+		args &&
+		typeof args[0] === 'string' &&
+		args[0].includes('You cannot change <Router routes>')
+	) {
 		// React route changed
 		// Can ignore this warning
 	} else {

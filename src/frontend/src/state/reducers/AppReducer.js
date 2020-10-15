@@ -35,9 +35,7 @@ const AppReducer = (state = initReducer, action) => {
 						type: action.alert,
 						message: action.message,
 						status: action.status,
-						clears: action.clears,
-						errorType: action.errorType,
-						formName: action.formName
+						clears: action.clears
 					}
 				}
 			});

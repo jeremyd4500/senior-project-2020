@@ -18,7 +18,7 @@ export const PATHS = {
 	// api paths
 };
 
-export const SEX = ['Male', 'Female', 'Other'];
+export const SEX = { Male: 0, Female: 1 };
 
 export const STATES = {
 	Alabama: 'AL',
@@ -95,9 +95,10 @@ export const HEADER_TABS = {
 };
 
 export const STATUS = KeyMirror({
+	ERROR: null,
+	INFO: null,
 	PENDING: null,
 	SUCCESS: null,
-	WARNING: null,
-	ERROR: null,
-	UNKNOWN: null
+	UNKNOWN: null,
+	WARNING: null
 });

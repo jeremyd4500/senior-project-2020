@@ -3,6 +3,9 @@ import React from 'react';
 import { Router, browserHistory } from 'react-router';
 
 import { PATHS } from 'utils';
+import { fetchToken, fetchUserInfo } from 'state/actions';
+import store from 'state';
+
 import AppContainer from 'react/containers/AppContainer';
 import LoginContainer from 'react/containers/LoginContainer';
 import LandingContainer from 'react/containers/LandingContainer';
@@ -11,12 +14,19 @@ import RegisterContainer from 'react/containers/RegisterContainer';
 import AccountContainer from 'react/containers/AccountContainer';
 
 const redirect = (nextState, replace, callback) => {
-	replace(PATHS.home);
+	replace(PATHS.login);
 	return callback();
 };
 
 const requireAuth = (nextState, replace, callback) => {
-	// validate auth here
+	store.dispatch(fetchToken()).then(() => {
+		store.dispatch(fetchUserInfo()).then((resp) => {
+			if (!resp || !resp.authenticated) {
+				return redirect(nextState, replace, callback);
+			}
+			return callback();
+		});
+	});
 };
 
 const scrollTop = () => {
@@ -26,37 +36,37 @@ const scrollTop = () => {
 const routeConfig = {
 	path: PATHS.root,
 	component: AppContainer,
-	indexRoute: { component: LandingContainer },
+	indexRoute: {
+		component: LandingContainer,
+		onEnter: requireAuth
+	},
 	childRoutes: [
 		{
 			path: PATHS.home,
 			component: LandingContainer,
-			childRoutes: []
-			// onEnter: requireAuth
+			childRoutes: [],
+			onEnter: requireAuth
 		},
 		{
 			path: PATHS.login,
 			component: LoginContainer,
 			childRoutes: []
-			// onEnter: requireAuth
 		},
 		{
 			path: PATHS.forgotPassword,
 			component: ForgotPasswordContainer,
 			childRoutes: []
-			// onEnter: requireAuth
 		},
 		{
 			path: PATHS.register,
 			component: RegisterContainer,
 			childRoutes: []
-			// onEnter: requireAuth
 		},
 		{
 			path: PATHS.account,
 			component: AccountContainer,
-			childRoutes: []
-			// onEnter: requireAuth
+			childRoutes: [],
+			onEnter: requireAuth
 		},
 		{
 			path: '*',

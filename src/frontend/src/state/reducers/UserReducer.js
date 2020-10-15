@@ -1,21 +1,43 @@
-import { USER_ACTIONS } from '../actions';
+import { USER_ACTIONS, USER_ACTIONS_FAILURE } from '../actions';
 import { assign } from 'lodash';
 
 const initReducer = {
-	authenticated: false
+	authenticated: false,
+	info: {},
+	token: null
 };
 
 const UserReducer = (state = initReducer, action) => {
 	switch (action.type) {
+		case USER_ACTIONS.AUTHENTICATE: {
+			return assign({}, state, {
+				authenticated: action.authenticated,
+				token: action.token
+			});
+		}
+		case USER_ACTIONS.FETCH_TOKEN: {
+			return assign({}, state, {
+				token: action.token
+			});
+		}
 		case USER_ACTIONS.FETCH_USER_INFO: {
 			return assign({}, state, {
-				authenticated: action.authenticated
+				authenticated: action.authenticated,
+				info: {
+					...action.info
+				}
 			});
 		}
 		case USER_ACTIONS.AUTHENTICATE: {
 			return assign({}, state, {
 				authenticated: action.authenticated
 			});
+		}
+		case USER_ACTIONS_FAILURE.FETCH_USER_INFO_FAILURE: {
+			return initReducer;
+		}
+		case USER_ACTIONS.LOGOUT: {
+			return initReducer;
 		}
 		default:
 			return state;

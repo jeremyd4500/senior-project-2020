@@ -1,11 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import AppWrapper from 'react/components/AppWrapper';
 import { PATHS } from 'utils';
+import { appNavigate, authenticateUser } from 'state/actions';
 
 const LoginContainer = (props) => {
-	const [email, setEmail] = React.useState(null);
+	const [username, setUsername] = React.useState(null);
 	const [password, setPassword] = React.useState(null);
+
+	const isValid = () => {
+		if (username && password) return true;
+		return false;
+	};
+
+	const submit = () => {
+		const { appNavigate, authenticateUser } = props;
+		if (isValid()) {
+			const data = {
+				username: username,
+				password: password
+			};
+			authenticateUser(data, appNavigate);
+		}
+	};
 
 	return (
 		<AppWrapper className='LoginContainer'>
@@ -13,13 +31,13 @@ const LoginContainer = (props) => {
 			<div className='LoginContainer__form'>
 				<div className='LoginContainer__form-field'>
 					<label className='LoginContainer__form-field-label'>
-						EMAIL ADDRESS
+						USERNAME
 					</label>
 					<input
 						className='LoginContainer__form-field-input'
 						type='text'
-						placeholder='Email'
-						onChange={(e) => setEmail(e.target.value)}
+						placeholder='Username'
+						onChange={(e) => setUsername(e.target.value)}
 					/>
 				</div>
 				<div className='LoginContainer__form-field'>
@@ -47,15 +65,25 @@ const LoginContainer = (props) => {
 						FORGOT PASSWORD
 					</Link>
 				</div>
-				<Link
+				<button
 					className='LoginContainer__form-submit button'
-					to={PATHS.home}
+					disabled={!isValid()}
+					onClick={submit}
+					type='submit'
 				>
 					Submit
-				</Link>
+				</button>
 			</div>
 		</AppWrapper>
 	);
 };
 
-export default LoginContainer;
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		appNavigate: (path) => dispatch(appNavigate(path, ownProps.router)),
+		authenticateUser: (data, appNavigate) =>
+			dispatch(authenticateUser(data, appNavigate))
+	};
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(LoginContainer));

@@ -11,20 +11,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 class Toaster extends Component {
+	componentDidMount() {
+		const { alert } = this.props;
+		if (alert) {
+			if (alert.clears) this.setTimer();
+		}
+	}
 	componentDidUpdate(prevProps, prevState) {
 		const { alert } = this.props;
-		const { alert: prevalert } = prevProps;
+		const { alert: prevAlert } = prevProps;
 
 		if (alert) {
-			if (prevalert) {
+			if (prevAlert) {
 				if (
-					alert.status !== prevalert.status ||
-					alert.message !== prevalert.message
+					alert.status !== prevAlert.status ||
+					alert.message !== prevAlert.message
 				) {
-					this.setTimer();
+					if (alert.clears) this.setTimer();
 				}
 			} else {
-				this.setTimer();
+				if (alert.clears) this.setTimer();
 			}
 		}
 	}
