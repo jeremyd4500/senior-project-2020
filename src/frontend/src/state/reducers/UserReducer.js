@@ -1,4 +1,4 @@
-import { USER_ACTIONS, USER_ACTIONS_FAILURE } from '../actions';
+import { USER_ACTIONS, USER_ACTIONS_FAILURE } from 'state/actions';
 import { assign } from 'lodash';
 
 const initReducer = {
@@ -14,6 +14,9 @@ const UserReducer = (state = initReducer, action) => {
 				authenticated: action.authenticated,
 				token: action.token
 			});
+		}
+		case USER_ACTIONS.LOGOUT: {
+			return initReducer;
 		}
 		case USER_ACTIONS.FETCH_TOKEN: {
 			return assign({}, state, {

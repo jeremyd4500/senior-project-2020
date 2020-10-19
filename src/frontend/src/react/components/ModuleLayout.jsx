@@ -2,20 +2,15 @@ import React from 'react';
 import Header from 'react/components/Header';
 import PropTypes from 'prop-types';
 
-const ModuleLayout = (props) => {
-	const { children, hasHeader, headerTabs } = props;
-
-	return (
-		<div className='ModuleLayout'>
-			{hasHeader && headerTabs && <Header tabs={headerTabs} />}
-			<div className='ModuleLayout__children'>{children}</div>
-		</div>
-	);
-};
+const ModuleLayout = ({ children, hasHeader }) => (
+	<div className='ModuleLayout'>
+		{hasHeader && <Header />}
+		<div className='ModuleLayout__children'>{children}</div>
+	</div>
+);
 
 ModuleLayout.propTypes = {
-	hasHeader: PropTypes.bool,
-	headerTabs: PropTypes.array
+	hasHeader: PropTypes.bool
 };
 
 export default ModuleLayout;

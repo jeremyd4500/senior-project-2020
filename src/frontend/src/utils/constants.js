@@ -5,17 +5,19 @@ export const PATHS = {
 	root: '/',
 
 	home: '/home',
-	account: '/account',
-	appointments: '/appointments',
-	about: '/about',
-	contact: '/contact',
+	account: '/home/account',
+	appointments: '/home/appointments',
+	inbox: '/home/inbox',
+	reports: '/home/reports',
+	// videos: '/home/videos',
+	blogs: '/home/blogs',
+
+	// auth
 
 	login: '/login',
 	register: '/register',
 	forgotPassword: '/forgotPassword',
 	resetPassword: '/resetPassword'
-
-	// api paths
 };
 
 export const SEX = { Male: 0, Female: 1 };
@@ -73,26 +75,42 @@ export const STATES = {
 	Wyoming: 'WY'
 };
 
-export const HEADER_TABS = {
-	home: [
-		{
-			label: 'Account',
-			path: PATHS.account
-		},
-		{
-			label: 'Appointments',
-			path: PATHS.appointments
-		},
-		{
-			label: 'About Us',
-			path: PATHS.about
-		},
-		{
-			label: 'Contact',
-			path: PATHS.contact
-		}
-	]
+export const ROLES = {
+	0: 'Admin',
+	1: 'Doctor',
+	2: 'Patient'
 };
+
+export const HEADER_TABS = [
+	{
+		label: 'Home',
+		path: PATHS.home
+	},
+	{
+		label: 'Inbox',
+		path: PATHS.inbox
+	},
+	{
+		label: 'Appointments',
+		path: PATHS.appointments
+	},
+	{
+		label: 'Blogs',
+		path: PATHS.blogs
+	},
+	{
+		label: 'Reports',
+		path: PATHS.reports
+	},
+	// {
+	// 	label: 'Videos',
+	// 	path: PATHS.videos
+	// },
+	{
+		label: 'Account',
+		path: PATHS.account
+	}
+];
 
 export const STATUS = KeyMirror({
 	ERROR: null,

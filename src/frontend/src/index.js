@@ -9,7 +9,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fab, fas);
 
 import Routes from 'react/Routes';
-import store from './state';
+import store from 'state';
 import 'less/styles.less';
 
 // filter out react router warnings

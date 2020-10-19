@@ -14,7 +14,7 @@ import RegisterContainer from 'react/containers/RegisterContainer';
 import AccountContainer from 'react/containers/AccountContainer';
 
 const redirect = (nextState, replace, callback) => {
-	replace(PATHS.login);
+	replace(PATHS.home);
 	return callback();
 };
 
@@ -22,7 +22,8 @@ const requireAuth = (nextState, replace, callback) => {
 	store.dispatch(fetchToken()).then(() => {
 		store.dispatch(fetchUserInfo()).then((resp) => {
 			if (!resp || !resp.authenticated) {
-				return redirect(nextState, replace, callback);
+				replace(PATHS.login);
+				return callback();
 			}
 			return callback();
 		});

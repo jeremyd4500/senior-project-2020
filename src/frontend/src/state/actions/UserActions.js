@@ -1,8 +1,7 @@
 import keyMirror from 'keymirror';
 import axios from 'axios';
 import { APP_ACTIONS } from 'state/actions';
-import { STATUS } from 'utils';
-import { PATHS } from '../../utils/constants';
+import { STATUS, PATHS } from 'utils';
 
 export const USER_ACTIONS = keyMirror({
 	AUTHENTICATE: null,
@@ -50,6 +49,40 @@ export const authenticateUser = (data, navigateFunc) => {
 							type: USER_ACTIONS_FAILURE.AUTHENTICATE_FAILURE,
 							error: err,
 							path
+						})
+					);
+				});
+		}).catch((err) => {});
+	};
+};
+
+export const logout = (navigateFunc) => {
+	const path = 'http://localhost:8000/auth/token/logout/';
+	return (dispatch, getStore) => {
+		const { token } = getStore().user;
+		return new Promise((resolve, reject) => {
+			axios
+				.post(
+					path,
+					{},
+					{
+						headers: {
+							Authorization: `Token ${token}`
+						}
+					}
+				)
+				.then(() => {
+					localStorage.removeItem('token');
+					dispatch({
+						type: USER_ACTIONS.LOGOUT
+					});
+					resolve(navigateFunc(PATHS.login));
+				})
+				.catch((err) => {
+					reject(
+						dispatch({
+							type: USER_ACTIONS_FAILURE.LOGOUT_FAILURE,
+							error: err
 						})
 					);
 				});
@@ -142,16 +175,17 @@ export const fetchUserInfo = () => {
 							type: USER_ACTIONS.FETCH_USER_INFO,
 							authenticated: true,
 							info: {
-								firstName: resp.data.first_name,
-								last_name: resp.data.last_name,
-								sex: resp.data.sex,
-								dob: resp.data.date_of_birth,
-								email: resp.data.email,
-								phone: resp.data.phone,
 								address: resp.data.address,
 								city: resp.data.city,
-								state: resp.data.state,
+								dob: resp.data.date_of_birth,
+								email: resp.data.email,
+								firstName: resp.data.first_name,
 								id: resp.data.id,
+								last_name: resp.data.last_name,
+								phone: resp.data.phone,
+								role: resp.data.user_role,
+								sex: resp.data.sex,
+								state: resp.data.state,
 								username: resp.data.username
 							},
 							path
