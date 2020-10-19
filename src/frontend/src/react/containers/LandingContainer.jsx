@@ -19,6 +19,12 @@ const LandingContainer = () => {
 					<ViewWrapper type='Appointments' path={PATHS.appointments}>
 						<AppointmentsView />
 					</ViewWrapper>
+					<ViewWrapper type='Blogs' path={PATHS.blogs}>
+						You have no blogs to read
+					</ViewWrapper>
+					<ViewWrapper type='Reports' path={PATHS.reports}>
+						You have no reports
+					</ViewWrapper>
 				</div>
 			</ModuleLayout>
 		</div>

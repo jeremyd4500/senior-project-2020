@@ -63,12 +63,12 @@ const routeConfig = {
 			component: RegisterContainer,
 			childRoutes: []
 		},
-		{
-			path: PATHS.account,
-			component: AccountContainer,
-			childRoutes: [],
-			onEnter: requireAuth
-		},
+		// {
+		// 	path: PATHS.account,
+		// 	component: AccountContainer,
+		// 	childRoutes: [],
+		// 	onEnter: requireAuth
+		// },
 		{
 			path: '*',
 			onEnter: redirect
