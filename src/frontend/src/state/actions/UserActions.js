@@ -159,7 +159,7 @@ export const fetchToken = () => {
 };
 
 export const fetchUserInfo = () => {
-	const path = 'http://localhost:8000/auth/users/me';
+	const path = 'http://localhost:8000/auth/users/me/';
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
 		return new Promise((resolve, reject) => {

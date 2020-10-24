@@ -17,7 +17,7 @@ export const fetchAppointments = () => {
 			token,
 			info: { id }
 		} = getStore().user;
-		const path = `http://localhost:8000/appointment`;
+		const path = `http://localhost:8000/appointment/`;
 		// const path = `http://localhost:8000/appointment/${id}`;
 		return new Promise((resolve, reject) => {
 			axios

@@ -14,7 +14,7 @@ export const MESSAGE_ACTIONS_FAILURE = keyMirror({
 export const fetchMessages = () => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = 'http://localhost:8000/messages/inbox';
+		const path = 'http://localhost:8000/messages/inbox/';
 		return new Promise((resolve, reject) => {
 			axios
 				.get(path, {
