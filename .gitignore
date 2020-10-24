@@ -12,9 +12,15 @@ out
 
 # pip libraries
 
+env
 /src/env
 *.pyc
 
 # Decouple, avoid commiting sensitive data to the repository
-/src/backend/.env
+
 db.sqlite3
+
+# other
+
+.idea
+.DS_Store
