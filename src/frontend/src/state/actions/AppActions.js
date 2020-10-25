@@ -70,3 +70,13 @@ export const setStatus = (status) => {
 		status
 	};
 };
+
+export const windowResize = (height, width) => {
+	return (dispatch) => {
+		return dispatch({
+			type: APP_ACTIONS.WINDOW_RESIZE,
+			height: height,
+			width: width
+		});
+	};
+};

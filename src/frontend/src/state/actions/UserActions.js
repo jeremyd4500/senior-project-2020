@@ -7,6 +7,7 @@ export const USER_ACTIONS = keyMirror({
 	AUTHENTICATE: null,
 	FETCH_TOKEN: null,
 	FETCH_USER_INFO: null,
+	FETCH_USERS: null,
 	LOGOUT: null,
 	REGISTER: null
 });
@@ -15,6 +16,7 @@ export const USER_ACTIONS_FAILURE = keyMirror({
 	AUTHENTICATE_FAILURE: null,
 	FETCH_TOKEN_FAILURE: null,
 	FETCH_USER_INFO_FAILURE: null,
+	FETCH_USERS_FAILURE: null,
 	LOGOUT_FAILURE: null,
 	REGISTER_FAILURE: null
 });
@@ -204,6 +206,49 @@ export const fetchUserInfo = () => {
 					reject(
 						dispatch({
 							type: USER_ACTIONS_FAILURE.FETCH_USER_INFO_FAILURE,
+							error: err.message,
+							authenticated: false,
+							path
+						})
+					);
+				});
+		}).catch((err) => {});
+	};
+};
+
+export const fetchUsers = (role, append = false) => {
+	const path = `http://localhost:8000/auth/roles/?user_role=${role}`;
+	return (dispatch, getStore) => {
+		const { token } = getStore().user;
+		return new Promise((resolve, reject) => {
+			axios
+				.get(path, {
+					headers: {
+						Authorization: `Token ${token}`
+					}
+				})
+				.then((resp) => {
+					resolve(
+						dispatch({
+							type: USER_ACTIONS.FETCH_USERS,
+							append: append,
+							users: resp.data,
+							path
+						})
+					);
+				})
+				.catch((err) => {
+					dispatch({
+						type: APP_ACTIONS.ALERT_ADD,
+						alert: 'APP',
+						message: 'Sorry! There was an issue fetching users.',
+						clears: true,
+						status: STATUS.WARNING,
+						path
+					});
+					reject(
+						dispatch({
+							type: USER_ACTIONS_FAILURE.FETCH_USERS_FAILURE,
 							error: err.message,
 							authenticated: false,
 							path

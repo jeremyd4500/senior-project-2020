@@ -2,7 +2,8 @@ import { MESSAGE_ACTIONS, MESSAGE_ACTIONS_FAILURE } from 'state/actions';
 import { assign } from 'lodash';
 
 const initReducer = {
-	messages: {}
+	messages: {},
+	thread: null
 };
 
 const MessageReducer = (state = initReducer, action) => {
@@ -12,6 +13,12 @@ const MessageReducer = (state = initReducer, action) => {
 				messages: action.messages
 			});
 		}
+		case MESSAGE_ACTIONS.FETCH_THREAD_MESSAGES: {
+			return assign({}, state, {
+				thread: action.thread
+			});
+		}
+
 		default:
 			return state;
 	}

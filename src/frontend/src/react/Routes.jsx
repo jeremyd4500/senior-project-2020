@@ -12,6 +12,7 @@ import LandingContainer from 'react/containers/LandingContainer';
 import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
 import AccountContainer from 'react/containers/AccountContainer';
+import InboxContainer from 'react/containers/InboxContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
@@ -45,30 +46,25 @@ const routeConfig = {
 		{
 			path: PATHS.home,
 			component: LandingContainer,
-			childRoutes: [],
 			onEnter: requireAuth
 		},
 		{
 			path: PATHS.login,
-			component: LoginContainer,
-			childRoutes: []
+			component: LoginContainer
 		},
 		{
 			path: PATHS.forgotPassword,
-			component: ForgotPasswordContainer,
-			childRoutes: []
+			component: ForgotPasswordContainer
 		},
 		{
 			path: PATHS.register,
-			component: RegisterContainer,
-			childRoutes: []
+			component: RegisterContainer
 		},
-		// {
-		// 	path: PATHS.account,
-		// 	component: AccountContainer,
-		// 	childRoutes: [],
-		// 	onEnter: requireAuth
-		// },
+		{
+			path: PATHS.inbox,
+			component: InboxContainer,
+			onEnter: requireAuth
+		},
 		{
 			path: '*',
 			onEnter: redirect

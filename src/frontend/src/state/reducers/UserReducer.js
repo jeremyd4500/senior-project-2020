@@ -4,7 +4,8 @@ import { assign } from 'lodash';
 const initReducer = {
 	authenticated: false,
 	info: {},
-	token: null
+	token: null,
+	users: []
 };
 
 const UserReducer = (state = initReducer, action) => {
@@ -35,6 +36,18 @@ const UserReducer = (state = initReducer, action) => {
 			return assign({}, state, {
 				authenticated: action.authenticated
 			});
+		}
+		case USER_ACTIONS.FETCH_USERS: {
+			console.log(state);
+			if (action.append) {
+				return assign({}, state, {
+					users: [...state.users, ...action.users]
+				});
+			} else {
+				return assign({}, state, {
+					users: action.users
+				});
+			}
 		}
 		case USER_ACTIONS_FAILURE.FETCH_USER_INFO_FAILURE: {
 			return initReducer;

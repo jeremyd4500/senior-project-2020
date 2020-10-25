@@ -4,7 +4,9 @@ import { APP_ACTIONS } from 'state/actions';
 const initReducer = {
 	alert: {},
 	form: {},
-	status: null
+	height: null,
+	status: null,
+	width: null
 };
 
 const AppReducer = (state = initReducer, action) => {
@@ -43,6 +45,12 @@ const AppReducer = (state = initReducer, action) => {
 		case APP_ACTIONS.ALERT_CLEAR: {
 			return assign({}, state, {
 				alert: initReducer.alert
+			});
+		}
+		case APP_ACTIONS.WINDOW_RESIZE: {
+			return assign({}, state, {
+				height: action.height,
+				width: action.width
 			});
 		}
 		default:
