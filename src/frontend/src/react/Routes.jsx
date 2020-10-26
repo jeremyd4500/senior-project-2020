@@ -12,6 +12,7 @@ import LandingContainer from 'react/containers/LandingContainer';
 import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
 import InboxContainer from 'react/containers/InboxContainer';
+import ReportsContainer from 'react/containers/ReportsContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
@@ -62,6 +63,11 @@ const routeConfig = {
 		{
 			path: PATHS.inbox,
 			component: InboxContainer,
+			onEnter: requireAuth
+		},
+		{
+			path: PATHS.reports,
+			component: ReportsContainer,
 			onEnter: requireAuth
 		},
 		{
