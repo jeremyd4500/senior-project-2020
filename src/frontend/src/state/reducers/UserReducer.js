@@ -38,7 +38,6 @@ const UserReducer = (state = initReducer, action) => {
 			});
 		}
 		case USER_ACTIONS.FETCH_USERS: {
-			console.log(state);
 			if (action.append) {
 				return assign({}, state, {
 					users: [...state.users, ...action.users]

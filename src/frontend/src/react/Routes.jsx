@@ -11,7 +11,6 @@ import LoginContainer from 'react/containers/LoginContainer';
 import LandingContainer from 'react/containers/LandingContainer';
 import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
-import AccountContainer from 'react/containers/AccountContainer';
 import InboxContainer from 'react/containers/InboxContainer';
 
 const redirect = (nextState, replace, callback) => {
