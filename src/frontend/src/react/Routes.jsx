@@ -13,6 +13,7 @@ import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
 import InboxContainer from 'react/containers/InboxContainer';
 import ReportsContainer from 'react/containers/ReportsContainer';
+import AccountContainer from 'react/containers/AccountContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
@@ -68,6 +69,11 @@ const routeConfig = {
 		{
 			path: PATHS.reports,
 			component: ReportsContainer,
+			onEnter: requireAuth
+		},
+		{
+			path: PATHS.account,
+			component: AccountContainer,
 			onEnter: requireAuth
 		},
 		{
