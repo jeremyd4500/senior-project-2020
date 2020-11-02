@@ -10,9 +10,6 @@ class AccountContainer extends Component {
 				<ContainerView>
 					<div className='AccountContainer'>
 						<h1>Your Account</h1>
-						<div className='AccountContainer_picture'>
-							{this.renderProfilePic()}
-						</div>
 						<div className='AccountContainer_patientName'>
 							{this.renderPatientName()}
 						</div>
@@ -27,17 +24,6 @@ class AccountContainer extends Component {
 			</ModuleLayout>
 		);
 	}
-
-	renderProfilePic = () => {
-		return (
-			<img
-				src={ProfilePic}
-				alt='Profile picture'
-				width='150'
-				height='150'
-			/>
-		);
-	};
 
 	renderPatientName = () => {
 		return <h3 id='patientName'>Chris Test</h3>;
