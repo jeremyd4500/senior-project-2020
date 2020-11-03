@@ -6,6 +6,7 @@ export const PATHS = {
 
 	home: '/home',
 	account: '/home/account',
+	editAccount: '/home/account/edit',
 	appointments: '/home/appointments',
 	inbox: '/home/inbox',
 	reports: '/home/reports',

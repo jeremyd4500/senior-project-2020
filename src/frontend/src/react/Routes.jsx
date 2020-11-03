@@ -16,6 +16,7 @@ import AccountContainer from 'react/containers/AccountContainer';
 import ReportsContainer from 'react/containers/ReportsContainer';
 import ReportsSubmissionContainer from 'react/containers/ReportsSubmissionContainer';
 import ReportsDoctorView from 'react/containers/ReportsDoctorView';
+import EditAccountContainer from 'react/containers/EditAccountContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
@@ -71,6 +72,11 @@ const routeConfig = {
 		{
 			path: PATHS.account,
 			component: AccountContainer,
+			onEnter: requireAuth
+		},
+		{
+			path: PATHS.editAccount,
+			component: EditAccountContainer,
 			onEnter: requireAuth
 		},
 		/* THIS REPORTS SUBMISSION BELOW IS FOR USERS/PATIENTS TO VIEW DATA */
