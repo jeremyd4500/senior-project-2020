@@ -9,6 +9,9 @@ export const PATHS = {
 	appointments: '/home/appointments',
 	inbox: '/home/inbox',
 	reports: '/home/reports',
+	reportsSubmissions: '/home/reports/submission',
+	//Please fix this to state appropriate format, this link (one line down) is for debugging purposes only
+	reportsDoctorView: '/home/reports/doctorPage',
 	// videos: '/home/videos',
 	blogs: '/home/blogs',
 
