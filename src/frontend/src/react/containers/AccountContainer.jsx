@@ -32,7 +32,7 @@ class AccountContainer extends Component {
 	renderPatientInfoTable = () => {
 		return (
 			<table id='patientInfoTable'>
-				<tbody>
+				<tbody id='patientInfoTableBody'>
 					<tr>
 						<td>Username: </td>
 						<td id='patientUsernameText'>ctest</td>
@@ -58,7 +58,7 @@ class AccountContainer extends Component {
 
 	renderButtons = () => {
 		return (
-			<div>
+			<div id='navigationBtns'>
 				<button id='editProfileBtn'>Edit Profile</button>
 				<button id='backBtn'>Back</button>
 			</div>

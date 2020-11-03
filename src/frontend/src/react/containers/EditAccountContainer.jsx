@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ProfilePic from 'images/defaultProfilePic.png';
 import ModuleLayout from 'react/components/ModuleLayout';
 import ContainerView from 'react/components/ContainerView';
 
