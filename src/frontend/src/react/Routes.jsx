@@ -98,6 +98,11 @@ const routeConfig = {
 			onEnter: requireAuth
 		},
 		{
+			path: PATHS.blogs,
+			component: BlogContainer,
+			onEnter: requireAuth
+		},
+		{
 			path: '*',
 			onEnter: redirect
 		}
