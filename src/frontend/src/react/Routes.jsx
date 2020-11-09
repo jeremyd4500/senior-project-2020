@@ -17,6 +17,7 @@ import ReportsContainer from 'react/containers/ReportsContainer';
 import ReportsSubmissionContainer from 'react/containers/ReportsSubmissionContainer';
 import ReportsDoctorView from 'react/containers/ReportsDoctorView';
 import EditAccountContainer from 'react/containers/EditAccountContainer';
+import BlogContainer from 'react/containers/BlogContainer';
 
 const redirect = (nextState, replace, callback) => {
 	replace(PATHS.home);
