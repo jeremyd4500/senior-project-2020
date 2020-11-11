@@ -24,6 +24,8 @@ class ReportsContainer extends Component {
 						</table>
 					</div>
 				</div>
+				
+				<span className = "report-add">Click here to add a new report: </span><a href = "/home/reports/submission" className = "button"> Add a report </a>
 			</ModuleLayout>
 		);
 	}
