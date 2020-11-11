@@ -8,11 +8,21 @@ class ReportsSubmissionContainer extends Component {
 
 		return (
 			<ModuleLayout hasHeader>
-				{/*<ContainerView>
-					{/*<div className='ReportsContainer'>
-						<h1>Hello Ok</h1>
-		</div>
-				</ContainerView>*/}
+				<ContainerView className = "testin">
+					<div className='ReportRegContainer'>
+						<h1 className = 'title'>Report Submission</h1>
+						<table className = 'reportSubmissionTable'> 
+						
+							<tr>
+								<td>Waist:</td>
+								<td>Height:</td>
+							</tr>
+							<td>Weight: </td>
+							<td>First Name:</td>
+							<td>Last Name:</td>	
+						</table>
+					</div>
+				</ContainerView>
 			</ModuleLayout>
 		);
 	}
