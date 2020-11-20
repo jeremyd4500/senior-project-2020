@@ -107,6 +107,20 @@ class Thread(AuditModel):
         """
         return self.userthread_set.filter(user=user, deleted=False, unread=True, thread=self)
 
+
+    def read_messages(self, user):
+        """
+        Gets the read messages from User in a given Thread.
+
+        Example:
+            ```
+            t = Thread.objects.first()
+            user = User.objects.first()
+            unread = t.uread_messages(user)
+            ```
+        """
+        return self.userthread_set.filter(user=user, deleted=False, unread=False, thread=self)
+
     def is_user_first_message(self, user):
         """
         Checks if the user started the thread

@@ -13,7 +13,9 @@ class Report(models.Model):
     height = models.IntegerField()
     oxygen_saturation = models.IntegerField()
     date = models.DateField(auto_now=True)
+    reportfile = models.FileField(upload_to='reports/', null=True, verbose_name="", blank=True)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 
     # def __str__(self):
     #     return (self.user_id)

@@ -40,7 +40,7 @@ class InboxSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Thread
-        fields = ('uuid', 'subject', 'sender', 'sent_at', 'total_unread', 'last_message')
+        fields = ('uuid', 'subject', 'sender', 'sent_at', 'total_unread','last_message')
 
     def get_last_message(self, instance):
         message = instance.last_message(self.user)
