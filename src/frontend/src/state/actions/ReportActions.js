@@ -1,27 +1,26 @@
 import keyMirror from 'keymirror';
 import axios from 'axios';
-import moment from 'moment';
 import { APP_ACTIONS } from 'state/actions';
 import { STATUS } from 'utils';
 
-export const APPOINTMENT_ACTIONS = keyMirror({
-	DELETE_APPOINTMENT: null,
-	FETCH_APPOINTMENTS: null,
-	POST_APPOINTMENT: null,
-	UPDATE_APPOINTMENT: null
+export const REPORT_ACTIONS = keyMirror({
+	DELETE_REPORT: null,
+	FETCH_REPORTS: null,
+	POST_REPORT: null,
+	UPDATE_REPORT: null
 });
 
-export const APPOINTMENT_ACTIONS_FAILURE = keyMirror({
-	DELETE_APPOINTMENT_FAILURE: null,
-	FETCH_APPOINTMENTS_FAILURE: null,
-	POST_APPOINTMENT_FAILURE: null,
-	UPDATE_APPOINTMENT_FAILURE: null
+export const REPORT_ACTIONS_FAILURE = keyMirror({
+	DELETE_REPORT_FAILURE: null,
+	FETCH_REPORTS_FAILURE: null,
+	POST_REPORT_FAILURE: null,
+	UPDATE_REPORT_FAILURE: null
 });
 
-export const fetchAppointments = () => {
+export const fetchReports = () => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = `http://localhost:8000/appointment/`;
+		const path = `http://localhost:8000/report/`;
 		return new Promise((resolve, reject) => {
 			axios
 				.get(path, {
@@ -32,8 +31,8 @@ export const fetchAppointments = () => {
 				.then((resp) => {
 					resolve(
 						dispatch({
-							type: APPOINTMENT_ACTIONS.FETCH_APPOINTMENTS,
-							appointments: resp.data,
+							type: REPORT_ACTIONS.FETCH_REPORTS,
+							reports: resp.data,
 							path
 						})
 					);
@@ -41,8 +40,7 @@ export const fetchAppointments = () => {
 				.catch((err) => {
 					reject(
 						dispatch({
-							type:
-								APPOINTMENT_ACTIONS_FAILURE.FETCH_APPOINTMENTS_FAILURE,
+							type: REPORT_ACTIONS_FAILURE.FETCH_REPORTS_FAILURE,
 							error: err,
 							path
 						})
@@ -52,41 +50,24 @@ export const fetchAppointments = () => {
 	};
 };
 
-export const postAppointment = (data) => {
+export const postReport = (data) => {
 	return (dispatch, getStore) => {
-		const {
-			info: { dob, email, first_name, id, last_name, sex },
-			token
-		} = getStore().user;
-
-		const getAge = () => {
-			const now = new Date();
-			const today = moment([
-				now.getFullYear(),
-				now.getMonth(),
-				now.getDate()
-			]);
-			const splitDOB = dob.split('-');
-			const old = moment([splitDOB[0], splitDOB[1], splitDOB[2]]);
-			return today.diff(old, 'years');
-		};
-
-		const path = `http://localhost:8000/appointment/`;
+		const { token } = getStore().user;
+		const path = `http://localhost:8000/report/`;
 		return new Promise((resolve, reject) => {
 			axios
 				.post(
 					path,
 					{
-						age: getAge(),
-						appointment_date: data.appointment_date,
-						email: email,
-						gender: sex,
-						time: data.time,
-						description: data.description,
-						first_name: first_name,
-						last_name: last_name,
-						user_id: id,
-						status: 0
+						bp: data.bp,
+						temperature: data.temperature,
+						bmi: data.bmi,
+						pulse: data.pulse,
+						weight: data.weight,
+						respiration: data.respiration,
+						height: data.height,
+						oxygen_saturation: data.oxygen_saturation,
+						user_id: data.user_id
 					},
 					{
 						headers: {
@@ -95,18 +76,18 @@ export const postAppointment = (data) => {
 					}
 				)
 				.then((resp) => {
-					dispatch(fetchAppointments());
+					dispatch(fetchReports());
 					dispatch({
 						type: APP_ACTIONS.ALERT_ADD,
 						alert: 'APP',
-						message: "Done! We've scheduled that for you.",
+						message: 'Done! We uploaded that for you.',
 						clears: true,
 						status: STATUS.SUCCESS,
 						path
 					});
 					resolve(
 						dispatch({
-							type: APPOINTMENT_ACTIONS.POST_APPOINTMENT,
+							type: REPORT_ACTIONS.POST_REPORT,
 							path
 						})
 					);
@@ -115,15 +96,14 @@ export const postAppointment = (data) => {
 					dispatch({
 						type: APP_ACTIONS.ALERT_ADD,
 						alert: 'APP',
-						message: 'Oops! There was a problem scheduling that.',
+						message: 'Whoops! There was an issue uploading that.',
 						clears: true,
 						status: STATUS.ERROR,
 						path
 					});
 					reject(
 						dispatch({
-							type:
-								APPOINTMENT_ACTIONS_FAILURE.POST_APPOINTMENT_FAILURE,
+							type: REPORT_ACTIONS_FAILURE.POST_REPORT_FAILURE,
 							error: err,
 							path
 						})
@@ -133,10 +113,10 @@ export const postAppointment = (data) => {
 	};
 };
 
-export const deleteAppointment = (appointment_id) => {
+export const deleteReport = (report_id) => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = `http://localhost:8000/appointment/${appointment_id}/`;
+		const path = `http://localhost:8000/report/${report_id}/`;
 		return new Promise((resolve, reject) => {
 			axios
 				.delete(path, {
@@ -145,18 +125,18 @@ export const deleteAppointment = (appointment_id) => {
 					}
 				})
 				.then((resp) => {
-					dispatch(fetchAppointments());
+					dispatch(fetchReports());
 					dispatch({
 						type: APP_ACTIONS.ALERT_ADD,
 						alert: 'APP',
-						message: "Done! We've deleted that for you.",
+						message: 'Done! We deleted that for you.',
 						clears: true,
 						status: STATUS.SUCCESS,
 						path
 					});
 					resolve(
 						dispatch({
-							type: APPOINTMENT_ACTIONS.DELETE_APPOINTMENT,
+							type: REPORT_ACTIONS.DELETE_REPORT,
 							path
 						})
 					);
@@ -172,8 +152,7 @@ export const deleteAppointment = (appointment_id) => {
 					});
 					reject(
 						dispatch({
-							type:
-								APPOINTMENT_ACTIONS_FAILURE.DELETE_APPOINTMENT_FAILURE,
+							type: REPORT_ACTIONS_FAILURE.DELETE_REPORT_FAILURE,
 							error: err,
 							path
 						})
@@ -183,10 +162,10 @@ export const deleteAppointment = (appointment_id) => {
 	};
 };
 
-export const updateAppointment = (data, appointment_id) => {
+export const updateReport = (data, report_id) => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = `http://localhost:8000/appointment/${appointment_id}/`;
+		const path = `http://localhost:8000/blog/${report_id}/`;
 		return new Promise((resolve, reject) => {
 			axios
 				.put(
@@ -201,18 +180,18 @@ export const updateAppointment = (data, appointment_id) => {
 					}
 				)
 				.then((resp) => {
-					dispatch(fetchAppointments());
+					dispatch(fetchReports());
 					dispatch({
 						type: APP_ACTIONS.ALERT_ADD,
 						alert: 'APP',
-						message: "Done! We've updated that for you.",
+						message: 'Done! We updated that for you.',
 						clears: true,
 						status: STATUS.SUCCESS,
 						path
 					});
 					resolve(
 						dispatch({
-							type: APPOINTMENT_ACTIONS.UPDATE_APPOINTMENT,
+							type: REPORT_ACTIONS.UPDATE_REPORT,
 							path
 						})
 					);
@@ -221,15 +200,15 @@ export const updateAppointment = (data, appointment_id) => {
 					dispatch({
 						type: APP_ACTIONS.ALERT_ADD,
 						alert: 'APP',
-						message: 'Oops! There was a problem updating that.',
+						message:
+							'Whoops! An error occurred while updating that.',
 						clears: true,
 						status: STATUS.ERROR,
 						path
 					});
 					reject(
 						dispatch({
-							type:
-								APPOINTMENT_ACTIONS_FAILURE.UPDATE_APPOINTMENT_FAILURE,
+							type: REPORT_ACTIONS_FAILURE.UPDATE_REPORT_FAILURE,
 							error: err,
 							path
 						})

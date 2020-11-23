@@ -29,6 +29,6 @@ class ReportDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.De
     def put(self, request, pk):
         return self.update(request, pk)
 
-    def delete(self, request):
+    def delete(self, request, pk):
         return self.destroy(request, pk)
 

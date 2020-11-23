@@ -214,7 +214,8 @@ export const replyMessage = (data, thread_id, user_id) => {
 				.post(
 					path,
 					{
-						message: data.message
+						message: data.message,
+						subject: data.subject
 					},
 					{
 						headers: {

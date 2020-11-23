@@ -1,11 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import ModuleLayout from 'react/components/ModuleLayout';
 import ViewWrapper from 'react/components/ViewWrapper';
 import InboxView from 'react/components/inbox/InboxView';
 import AppointmentsView from 'react/components/AppointmentsView';
-import { appNavigate, logout } from 'state/actions';
+import BlogsView from 'react/components/BlogsView';
+import ReportsView from 'react/components/ReportsView';
 import { PATHS } from 'utils';
 
 const LandingContainer = () => (
@@ -19,21 +18,14 @@ const LandingContainer = () => (
 					<AppointmentsView />
 				</ViewWrapper>
 				<ViewWrapper type='Blogs' path={PATHS.blogs}>
-					You have no blogs to read
+					<BlogsView />
 				</ViewWrapper>
 				<ViewWrapper type='Reports' path={PATHS.reports}>
-					You have no reports
+					<ReportsView />
 				</ViewWrapper>
 			</div>
 		</ModuleLayout>
 	</div>
 );
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		appNavigate: (path) => dispatch(appNavigate(path, ownProps.router)),
-		logout: (navigateFunc) => dispatch(logout(navigateFunc))
-	};
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(LandingContainer));
+export default LandingContainer;

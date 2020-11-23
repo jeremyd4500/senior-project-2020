@@ -1,33 +1,74 @@
 .AccountContainer {
-	width: 100%;
-	height: 100%;
-	text-align: center;
-}
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	border: 2px solid black;
+	border-radius: 5px;
+	align-items: center;
 
-.AccountContainer_patientName {
-	font-size: 20px;
-}
+	&__field {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
 
-#patientInfoTable {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-	text-align: center;
-}
+		&-label {
+		}
 
-tbody td:first-child {
-	font-size: 20px;
-}
+		&-input {
+			padding: 5px 20px;
+			width: 50%;
+			height: 30px;
+		}
 
-tbody td:nth-child(2) {
-	color: gray;
-}
+		.SelectMenu {
+			width: 55%;
+		}
 
-button {
-	background-color: #82c7a5;
-	border: none;
-	padding: 5px 15px;
-	margin: 30px 10px;
-	font-family: Bebas;
-	font-size: 16px;
+		.react-date-picker {
+			width: 55%;
+		}
+	}
+
+	&__buttons {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+
+		&-submit {
+			padding: 5px 40px;
+			border-radius: 20px;
+			color: white;
+			background-color: #4f5ada;
+			border: 2px solid #3240d4;
+			font-size: 20px;
+			text-align: center;
+			text-decoration: none;
+			margin-left: 20px;
+
+			&:hover {
+				background-color: #4f5adae0;
+				border: 2px solid #4f5ada;
+			}
+		}
+
+		&-cancel {
+			padding: 5px 40px;
+			border-radius: 20px;
+			color: black;
+			background-color: transparent;
+			border: 2px solid black;
+			font-size: 20px;
+			text-align: center;
+			text-decoration: none;
+
+			&:hover {
+				color: dimgray;
+				border: 2px solid dimgray;
+				background-color: lightgrey;
+			}
+		}
+	}
 }

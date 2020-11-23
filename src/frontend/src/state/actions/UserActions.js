@@ -9,7 +9,8 @@ export const USER_ACTIONS = keyMirror({
 	FETCH_USER_INFO: null,
 	FETCH_USERS: null,
 	LOGOUT: null,
-	REGISTER: null
+	REGISTER: null,
+	UPDATE_USER: null
 });
 
 export const USER_ACTIONS_FAILURE = keyMirror({
@@ -18,7 +19,8 @@ export const USER_ACTIONS_FAILURE = keyMirror({
 	FETCH_USER_INFO_FAILURE: null,
 	FETCH_USERS_FAILURE: null,
 	LOGOUT_FAILURE: null,
-	REGISTER_FAILURE: null
+	REGISTER_FAILURE: null,
+	UPDATE_USER_FAILURE: null
 });
 
 export const authenticateUser = (data, navigateFunc) => {
@@ -181,7 +183,7 @@ export const fetchUserInfo = () => {
 								city: resp.data.city,
 								dob: resp.data.date_of_birth,
 								email: resp.data.email,
-								firstName: resp.data.first_name,
+								first_name: resp.data.first_name,
 								id: resp.data.id,
 								last_name: resp.data.last_name,
 								phone: resp.data.phone,
@@ -251,6 +253,60 @@ export const fetchUsers = (role, append = false) => {
 							type: USER_ACTIONS_FAILURE.FETCH_USERS_FAILURE,
 							error: err.message,
 							authenticated: false,
+							path
+						})
+					);
+				});
+		}).catch((err) => {});
+	};
+};
+
+export const updateUser = (data) => {
+	const path = 'http://localhost:8000/auth/users/me/';
+	return (dispatch, getStore) => {
+		const { token } = getStore().user;
+		return new Promise((resolve, reject) => {
+			axios
+				.put(
+					path,
+					{ ...data },
+					{
+						headers: {
+							Authorization: `Token ${token}`
+						}
+					}
+				)
+				.then((resp) => {
+					dispatch(fetchUserInfo());
+					dispatch({
+						type: APP_ACTIONS.ALERT_ADD,
+						alert: 'APP',
+						message: "Done! We've updated your information.",
+						clears: true,
+						status: STATUS.SUCCESS,
+						path
+					});
+					resolve(
+						dispatch({
+							type: USER_ACTIONS.UPDATE_USER,
+							path
+						})
+					);
+				})
+				.catch((err) => {
+					dispatch({
+						type: APP_ACTIONS.ALERT_ADD,
+						alert: 'APP',
+						message:
+							'Sorry! We are unable to update your information.',
+						clears: true,
+						status: STATUS.ERROR,
+						path
+					});
+					reject(
+						dispatch({
+							type: USER_ACTIONS_FAILURE.UPDATE_USER_FAILURE,
+							error: err.message,
 							path
 						})
 					);

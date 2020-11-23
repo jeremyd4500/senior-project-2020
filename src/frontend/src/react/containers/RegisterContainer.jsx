@@ -20,9 +20,6 @@ const RegisterContainer = (props) => {
 	const [state, setState] = React.useState(null);
 	const [dob, setDob] = React.useState(new Date());
 	const [sex, setSex] = React.useState(null);
-	// const [heightFeet, setHeightFeet] = React.useState(null);
-	// const [heightInches, setHeightInches] = React.useState(null);
-	// const [weight, setWeight] = React.useState(null);
 
 	const isValid = () => {
 		if (
@@ -200,63 +197,6 @@ const RegisterContainer = (props) => {
 						{renderSexSelector()}
 					</div>
 				</div>
-				{/* <div className='RegisterContainer__form-field-multi'>
-					<div className='RegisterContainer__form-field multi'>
-						<label className='RegisterContainer__form-field-label'>
-							HEIGHT
-						</label>
-						<div className='RegisterContainer__form-field-dual-input'>
-							<div className='RegisterContainer__form-field-dual-input-pair'>
-								<input
-									type='number'
-									className='RegisterContainer__form-field-dual-input-pair-input'
-									min='0'
-									max='10'
-									onChange={(e) =>
-										setHeightFeet(e.target.value)
-									}
-									required
-								/>
-								<label className='RegisterContainer__form-field-dual-input-pair-label'>
-									Feet
-								</label>
-							</div>
-							<div className='RegisterContainer__form-field-dual-input-pair'>
-								<input
-									type='number'
-									className='RegisterContainer__form-field-dual-input-pair-input'
-									min='0'
-									max='11'
-									onChange={(e) =>
-										setHeightInches(e.target.value)
-									}
-									required
-								/>
-								<label className='RegisterContainer__form-field-dual-input-pair-label'>
-									Inches
-								</label>
-							</div>
-						</div>
-					</div>
-					<div className='RegisterContainer__form-field multi'>
-						<label className='RegisterContainer__form-field-label'>
-							WEIGHT
-						</label>
-						<div className='RegisterContainer__form-field-single-input'>
-							<input
-								type='number'
-								className='RegisterContainer__form-field-single-input-input'
-								min='0'
-								max='1000'
-								onChange={(e) => setWeight(e.target.value)}
-								required
-							/>
-							<label className='RegisterContainer__form-field-single-input-label'>
-								Pounds
-							</label>
-						</div>
-					</div>
-				</div> */}
 				<div className='RegisterContainer__form-field'>
 					<label className='RegisterContainer__form-field-label'>
 						PASSWORD

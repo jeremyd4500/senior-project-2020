@@ -10,10 +10,6 @@ export const PATHS = {
 	appointments: '/home/appointments',
 	inbox: '/home/inbox',
 	reports: '/home/reports',
-	reportsSubmissions: '/home/reports/submission',
-	//Please fix this to state appropriate format, this link (one line down) is for debugging purposes only
-	reportsDoctorView: '/home/reports/doctorPage',
-	// videos: '/home/videos',
 	blogs: '/home/blogs',
 
 	// auth
@@ -83,6 +79,18 @@ export const ROLES = {
 	0: 'Admin',
 	1: 'Doctor',
 	2: 'Patient'
+};
+
+export const APPOINTMENT_STATUS = {
+	0: 'Pending Approval',
+	1: 'Approved',
+	2: 'No Show',
+	3: 'Completed'
+};
+
+export const BLOG_STATUS = {
+	0: 'Draft',
+	1: 'Publish'
 };
 
 export const HEADER_TABS = [

@@ -4,12 +4,14 @@ import ModuleLayout from 'react/components/ModuleLayout';
 import ContainerView from 'react/components/ContainerView';
 import MessageListView from 'react/components/inbox/MessageListView';
 import NewMessageView from 'react/components/inbox/NewMessageView';
+import Modal from 'react/components/Modal';
 import {
 	clearThreadMessages,
 	fetchMessages,
 	fetchThreadMessages,
 	fetchThreadMessagesList,
 	fetchUsers,
+	replyMessage,
 	sendMessage,
 	setCurrentThread
 } from 'state/actions';
@@ -19,6 +21,8 @@ class InboxContainer extends Component {
 	constructor(props) {
 		super(props);
 
+		this.interval = null;
+
 		this.state = {
 			loadedThreads: false,
 			messageBoxView: 'none',
@@ -27,7 +31,9 @@ class InboxContainer extends Component {
 				subject: null,
 				message: null
 			},
-			recipients: []
+			recipients: [],
+			replyMessage: null,
+			showModal: false
 		};
 	}
 
@@ -35,6 +41,7 @@ class InboxContainer extends Component {
 		const {
 			current_thread_id,
 			fetchMessages,
+			fetchThreadMessages,
 			fetchUsers,
 			role
 		} = this.props;
@@ -51,7 +58,8 @@ class InboxContainer extends Component {
 				break;
 			}
 			case 2: {
-				fetchUsers(1);
+				fetchUsers(0, true);
+				fetchUsers(1, true);
 				break;
 			}
 			default: {
@@ -61,12 +69,19 @@ class InboxContainer extends Component {
 			}
 		}
 		fetchMessages();
+		this.interval = setInterval(() => {
+			fetchMessages();
+		}, 20000);
 		if (current_thread_id) {
 			fetchThreadMessages(current_thread_id);
 			this.setState({
 				messageBoxView: 'viewMessage'
 			});
 		}
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -90,23 +105,20 @@ class InboxContainer extends Component {
 			prevProps.current_thread_id !== current_thread_id
 		) {
 			fetchThreadMessages(current_thread_id);
-			this.setState({
-				messageBoxView: 'viewMessage'
-			});
+			if (this.state.messageBoxView !== 'viewMessage') {
+				this.setState({
+					messageBoxView: 'viewMessage'
+				});
+			}
 		}
 	}
 
 	render() {
-		console.log('##########################');
-		console.log('##########################');
-		console.log(this.props);
-		console.log(this.state);
-		console.log('##########################');
-		console.log('##########################');
 		return (
 			<ModuleLayout hasHeader>
 				<ContainerView>
 					<div className='InboxContainer'>
+						{this.renderModal()}
 						<div className='InboxContainer__interface'>
 							<div className='InboxContainer__inbox-list'>
 								{this.renderInboxList()}
@@ -125,16 +137,26 @@ class InboxContainer extends Component {
 	}
 
 	renderFooter = () => (
-		<button
-			className='button InboxContainer__footer-button'
-			disabled={
-				this.state.messageBoxView !== 'none' &&
-				this.state.messageBoxView !== 'viewMessage'
-			}
-			onClick={() => this.setState({ messageBoxView: 'newMessage' })}
-		>
-			New Message
-		</button>
+		<React.Fragment>
+			{this.state.messageBoxView === 'viewMessage' && (
+				<button
+					className='button InboxContainer__footer-button'
+					onClick={() => this.setState({ showModal: true })}
+				>
+					Reply
+				</button>
+			)}
+			<button
+				className='button InboxContainer__footer-button'
+				disabled={
+					this.state.messageBoxView !== 'none' &&
+					this.state.messageBoxView !== 'viewMessage'
+				}
+				onClick={() => this.setState({ messageBoxView: 'newMessage' })}
+			>
+				New Message
+			</button>
+		</React.Fragment>
 	);
 
 	renderInboxList = () => {
@@ -169,7 +191,10 @@ class InboxContainer extends Component {
 							message.uuid
 						)}
 						date={formatDate(message.sent_at)}
-						handleSelect={() => setCurrentThread(message.uuid)}
+						handleSelect={() => {
+							setCurrentThread(message.uuid);
+							this.setState({ messageBoxView: 'viewMessage' });
+						}}
 						key={index}
 						subject={message.subject}
 					/>
@@ -179,10 +204,7 @@ class InboxContainer extends Component {
 	};
 
 	renderMessageBox = () => {
-		if (
-			!this.props.current_thread &&
-			this.state.messageBoxView === 'none'
-		) {
+		if (this.state.messageBoxView === 'none') {
 			return (
 				<div className='InboxContainer__message-box-no-selection'>
 					<p>
@@ -240,6 +262,7 @@ class InboxContainer extends Component {
 							},
 							this.state.newMessage.to.value
 						);
+						this.setState({ messageBoxView: none });
 					}}
 					handleCancel={() => {
 						this.setState({
@@ -274,13 +297,13 @@ class InboxContainer extends Component {
 									return (
 										<div key={index}>
 											<hr />
-											<b>Sent by: </b>{' '}
+											<b>From: </b>{' '}
 											{message.sender.display_name}
 											<br />
 											<b>Sent on: </b>{' '}
 											{`${date.date} at ${date.time}`}
 											<br />
-											<b>Content: </b>
+											<b>Message: </b>
 											{message.content}
 										</div>
 									);
@@ -288,6 +311,74 @@ class InboxContainer extends Component {
 						  )
 						: ''}
 				</div>
+			);
+		}
+	};
+
+	renderModal = () => {
+		const {
+			props: {
+				current_thread,
+				current_thread_id,
+				fetchMessages,
+				replyMessage,
+				sender_id
+			},
+			state: { showModal }
+		} = this;
+
+		if (showModal) {
+			return (
+				<Modal
+					cancelText={'Cancel'}
+					cancel={() => {
+						this.setState({
+							replyMessage: null,
+							showModal: false
+						});
+					}}
+					canSubmit={() => {
+						if (typeof this.state.replyMessage === 'string') {
+							return this.state.replyMessage.trim() !== '';
+						} else {
+							return false;
+						}
+					}}
+					submitText={'Send'}
+					submit={() => {
+						replyMessage(
+							{
+								message: this.state.replyMessage,
+								subject: current_thread.subject
+							},
+							current_thread_id,
+							sender_id
+						);
+						this.setState(
+							{
+								messageBoxView: 'none',
+								replyMessage: null,
+								showModal: false
+							},
+							fetchMessages
+						);
+					}}
+					title={'Reply To Message'}
+				>
+					<div className='InboxContainer__modal'>
+						<p className='InboxContainer__modal-header'>
+							<b>To: </b>
+							{current_thread.messages[0].sender.display_name}
+						</p>
+						<textarea
+							className='InboxContainer__modal-textarea'
+							onChange={(e) =>
+								this.setState({ replyMessage: e.target.value })
+							}
+							placeholder='Message...'
+						/>
+					</div>
+				</Modal>
 			);
 		}
 	};
@@ -314,12 +405,31 @@ class InboxContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+	const getSenderID = () => {
+		if (
+			state.messages.current_thread_id &&
+			state.messages.thread &&
+			state.messages.thread.messages.length > 0
+		) {
+			const senderName =
+				state.messages.thread.messages[0].sender.display_name;
+			for (let i = 0; i < state.user.users.length; i++) {
+				if (
+					`${state.user.users[i].first_name} ${state.user.users[i].last_name}` ===
+					senderName
+				) {
+					return state.user.users[i].id;
+				}
+			}
+		}
+	};
 	return {
 		role: state.user.info.role,
 		messages: state.messages.messages,
 		thread_messages: state.messages.thread_messages,
 		current_thread_id: state.messages.current_thread_id,
 		current_thread: state.messages.thread,
+		sender_id: getSenderID(),
 		users: state.user.users
 	};
 };
@@ -330,6 +440,7 @@ const mapDispatchToProps = {
 	fetchThreadMessages,
 	fetchThreadMessagesList,
 	fetchUsers,
+	replyMessage,
 	sendMessage,
 	setCurrentThread
 };

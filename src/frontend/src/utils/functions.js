@@ -17,6 +17,14 @@ export const getSelectMenuOptionsObject = (options = {}) => {
 		};
 	});
 };
+export const getSelectMenuOptionsObjectReverse = (options = {}) => {
+	return Object.keys(options).map((key) => {
+		return {
+			label: options[key],
+			value: key
+		};
+	});
+};
 
 export const formatDate = (dateObj) => {
 	const date = new Date(dateObj);
@@ -34,6 +42,12 @@ export const formatDate = (dateObj) => {
 		time = `12:${date.getMinutes()} pm`;
 	} else {
 		time = `${hour - 12}:${date.getMinutes()} pm`;
+	}
+
+	const splitTime = time.trim().split(' ');
+	const hourMinutes = splitTime[0].split(':');
+	if (hourMinutes[1].length === 1) {
+		time = `${splitTime[0]}0 ${splitTime[1]}`;
 	}
 
 	return {

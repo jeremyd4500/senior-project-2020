@@ -12,11 +12,9 @@ import LandingContainer from 'react/containers/LandingContainer';
 import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
 import InboxContainer from 'react/containers/InboxContainer';
+import AppointmentContainer from 'react/containers/AppointmentContainer';
 import AccountContainer from 'react/containers/AccountContainer';
 import ReportsContainer from 'react/containers/ReportsContainer';
-import ReportsSubmissionContainer from 'react/containers/ReportsSubmissionContainer';
-import ReportsDoctorView from 'react/containers/ReportsDoctorView';
-import EditAccountContainer from 'react/containers/EditAccountContainer';
 import BlogContainer from 'react/containers/BlogContainer';
 
 const redirect = (nextState, replace, callback) => {
@@ -71,31 +69,18 @@ const routeConfig = {
 			onEnter: requireAuth
 		},
 		{
+			path: PATHS.appointments,
+			component: AppointmentContainer,
+			onEnter: requireAuth
+		},
+		{
 			path: PATHS.account,
 			component: AccountContainer,
 			onEnter: requireAuth
 		},
 		{
-			path: PATHS.editAccount,
-			component: EditAccountContainer,
-			onEnter: requireAuth
-		},
-		/* THIS REPORTS SUBMISSION BELOW IS FOR USERS/PATIENTS TO VIEW DATA */
-		{
 			path: PATHS.reports,
 			component: ReportsContainer,
-			onEnter: requireAuth
-		},
-		/* THIS REPORTS SUBMISSION BELOW IS FOR USERS/PATIENTS TO SUBMIT DATA */
-		{
-			path: PATHS.reportsSubmissions,
-			component: ReportsSubmissionContainer,
-			onEnter: requireAuth
-		},
-		/* THIS REPORTS SUBMISSION BELOW IS FOR DOCTORS, NEED BETTER WAY TO IMPLEMENT */
-		{
-			path: PATHS.reportsDoctorView,
-			component: ReportsDoctorView,
 			onEnter: requireAuth
 		},
 		{
