@@ -6,7 +6,6 @@ export const PATHS = {
 
 	home: '/home',
 	account: '/home/account',
-	editAccount: '/home/account/edit',
 	appointments: '/home/appointments',
 	inbox: '/home/inbox',
 	reports: '/home/reports',
@@ -15,9 +14,7 @@ export const PATHS = {
 	// auth
 
 	login: '/login',
-	register: '/register',
-	forgotPassword: '/forgotPassword',
-	resetPassword: '/resetPassword'
+	register: '/register'
 };
 
 export const SEX = { Male: 0, Female: 1 };
@@ -88,6 +85,13 @@ export const APPOINTMENT_STATUS = {
 	3: 'Completed'
 };
 
+export const APPOINTMENT_STATUS_COLORS = {
+	0: 'yellow',
+	1: 'lightblue',
+	2: 'lightcoral',
+	3: 'lightgreen'
+};
+
 export const BLOG_STATUS = {
 	0: 'Draft',
 	1: 'Publish'
@@ -111,7 +115,7 @@ export const HEADER_TABS = [
 		path: PATHS.blogs
 	},
 	{
-		label: 'Reports',
+		label: 'Reports & Vitals',
 		path: PATHS.reports
 	},
 	// {

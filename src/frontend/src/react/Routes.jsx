@@ -9,7 +9,6 @@ import store from 'state';
 import AppContainer from 'react/containers/AppContainer';
 import LoginContainer from 'react/containers/LoginContainer';
 import LandingContainer from 'react/containers/LandingContainer';
-import ForgotPasswordContainer from 'react/containers/ForgotPasswordContainer';
 import RegisterContainer from 'react/containers/RegisterContainer';
 import InboxContainer from 'react/containers/InboxContainer';
 import AppointmentContainer from 'react/containers/AppointmentContainer';
@@ -54,10 +53,6 @@ const routeConfig = {
 		{
 			path: PATHS.login,
 			component: LoginContainer
-		},
-		{
-			path: PATHS.forgotPassword,
-			component: ForgotPasswordContainer
 		},
 		{
 			path: PATHS.register,

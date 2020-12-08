@@ -136,7 +136,7 @@ export const postAppointment = (data) => {
 export const deleteAppointment = (appointment_id) => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = `http://localhost:8000/appointment/${appointment_id}/`;
+		const path = `http://localhost:8000/appointment/${appointment_id}`;
 		return new Promise((resolve, reject) => {
 			axios
 				.delete(path, {
@@ -186,7 +186,7 @@ export const deleteAppointment = (appointment_id) => {
 export const updateAppointment = (data, appointment_id) => {
 	return (dispatch, getStore) => {
 		const { token } = getStore().user;
-		const path = `http://localhost:8000/appointment/${appointment_id}/`;
+		const path = `http://localhost:8000/appointment/${appointment_id}`;
 		return new Promise((resolve, reject) => {
 			axios
 				.put(

@@ -58,12 +58,6 @@ const LoginContainer = (props) => {
 					>
 						CREATE ACCOUNT
 					</Link>
-					<Link
-						className='LoginContainer__form-help-btn button'
-						to={PATHS.forgotPassword}
-					>
-						FORGOT PASSWORD
-					</Link>
 				</div>
 				<button
 					className='LoginContainer__form-submit button'

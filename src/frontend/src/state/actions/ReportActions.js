@@ -55,26 +55,23 @@ export const postReport = (data) => {
 		const { token } = getStore().user;
 		const path = `http://localhost:8000/report/`;
 		return new Promise((resolve, reject) => {
+			const formData = new FormData();
+			formData.append('bp', data.bp);
+			formData.append('temperature', data.temperature);
+			formData.append('bmi', data.bmi);
+			formData.append('pulse', data.pulse);
+			formData.append('weight', data.weight);
+			formData.append('respiration', data.respiration);
+			formData.append('height', data.height);
+			formData.append('oxygen_saturation', data.oxygen_saturation);
+			if (data.file) formData.append('reportfile', data.file);
+			formData.append('user_id', data.user_id);
 			axios
-				.post(
-					path,
-					{
-						bp: data.bp,
-						temperature: data.temperature,
-						bmi: data.bmi,
-						pulse: data.pulse,
-						weight: data.weight,
-						respiration: data.respiration,
-						height: data.height,
-						oxygen_saturation: data.oxygen_saturation,
-						user_id: data.user_id
-					},
-					{
-						headers: {
-							Authorization: `Token ${token}`
-						}
+				.post(path, formData, {
+					headers: {
+						Authorization: `Token ${token}`
 					}
-				)
+				})
 				.then((resp) => {
 					dispatch(fetchReports());
 					dispatch({

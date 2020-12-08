@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ContainerView from 'react/components/ContainerView';
 import ModuleLayout from 'react/components/ModuleLayout';
 import Modal from 'react/components/Modal';
 import SelectMenu from 'react/components/SelectMenu';
 import {
-	deleteReport,
 	fetchReports,
 	fetchUsers,
 	postReport,
@@ -30,6 +27,7 @@ class ReportsContainer extends Component {
 				respiration: null,
 				height: null,
 				oxygen_saturation: null,
+				file: null,
 				user_id: null
 			}
 		};
@@ -72,19 +70,21 @@ class ReportsContainer extends Component {
 					<div className='ReportsContainer'>
 						<div className='ReportsContainer__header'>
 							<p className='ReportsContainer__header-label'>
-								Your Reports
+								Reports & Vitals
 							</p>
 							{this.renderModal()}
-							<button
-								className='ReportsContainer__header-button button'
-								onClick={() =>
-									this.setState({
-										modalView: 'add_report'
-									})
-								}
-							>
-								Add Report
-							</button>
+							{this.props.role !== 2 && (
+								<button
+									className='ReportsContainer__header-button button'
+									onClick={() =>
+										this.setState({
+											modalView: 'add_report'
+										})
+									}
+								>
+									Add Report
+								</button>
+							)}
 						</div>
 						<div className='ReportsContainer__list'>
 							{this.renderReports()}
@@ -97,7 +97,7 @@ class ReportsContainer extends Component {
 
 	renderReports = () => {
 		const {
-			props: { reports, deleteReport, role, users }
+			props: { reports, role, users }
 		} = this;
 		if (reports && reports.length && reports.length > 0) {
 			const patients = {};
@@ -116,15 +116,6 @@ class ReportsContainer extends Component {
 									<b>Patient: </b>
 									{patients[report.user_id]}
 								</p>
-								<p className='ReportsContainer__list-group-section-item'>
-									<b>Created On: </b>
-									{formatDate(report.date).date}
-								</p>
-								<FontAwesomeIcon
-									className='ReportsContainer__list-group-section-icon button'
-									icon={faTrashAlt}
-									onClick={() => deleteReport(report.id)}
-								/>
 							</div>
 						)}
 						<div className='ReportsContainer__list-group-section'>
@@ -162,6 +153,25 @@ class ReportsContainer extends Component {
 								<b>Oxygen Saturation: </b>
 								{report.oxygen_saturation}
 							</p>
+						</div>
+						<div className='ReportsContainer__list-group-section'>
+							<p className='ReportsContainer__list-group-section-item'>
+								<b>Created On: </b>
+								{formatDate(report.date).date}
+							</p>
+							{report.reportfile && (
+								<p className='ReportsContainer__list-group-section-item'>
+									<button
+										className='ReportsContainer__list-group-section-item-button button'
+										type='submit'
+										onClick={() =>
+											window.open(report.reportfile)
+										}
+									>
+										Open Attachment
+									</button>
+								</p>
+							)}
 						</div>
 					</div>
 				</React.Fragment>
@@ -205,6 +215,7 @@ class ReportsContainer extends Component {
 								respiration: null,
 								height: null,
 								oxygen_saturation: null,
+								file: null,
 								user_id: null
 							}
 						});
@@ -234,6 +245,7 @@ class ReportsContainer extends Component {
 							height: this.state.newReport.height,
 							oxygen_saturation: this.state.newReport
 								.oxygen_saturation,
+							file: this.state.newReport.file,
 							user_id: null
 						};
 						if (role === 2) {
@@ -254,6 +266,7 @@ class ReportsContainer extends Component {
 									respiration: null,
 									height: null,
 									oxygen_saturation: null,
+									file: null,
 									user_id: null
 								}
 							},
@@ -407,27 +420,59 @@ class ReportsContainer extends Component {
 								}
 							/>
 						</div>
-						{[0, 1].includes(role) && (
-							<div className='ReportsContainer__modal-row'>
-								<p className='ReportsContainer__modal-row-label'>
-									<b>User: </b>
-								</p>
-								<SelectMenu
-									handleChange={(newValue) =>
+						<div className='ReportsContainer__modal-row'>
+							<p className='ReportsContainer__modal-row-label'>
+								<b>Add Attachment: </b>
+							</p>
+							<div
+								style={{
+									width: '50%',
+									border: '1px solid black',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									height: 'calc(40px - 4px)'
+								}}
+							>
+								<input
+									style={{
+										width: 'auto',
+										height: 'auto',
+										margin: '0',
+										padding: '0px 10px'
+									}}
+									type='file'
+									placeholder='No File Selected'
+									onChange={(e) =>
 										this.setState({
 											newReport: {
 												...this.state.newReport,
-												user_id: newValue
+												file: e.target.files[0]
 											}
 										})
 									}
-									options={getSelectMenuOptionsObjectReverse(
-										patients
-									)}
-									value={this.state.newReport.user_id}
 								/>
 							</div>
-						)}
+						</div>
+						<div className='ReportsContainer__modal-row'>
+							<p className='ReportsContainer__modal-row-label'>
+								<b>User: </b>
+							</p>
+							<SelectMenu
+								handleChange={(newValue) =>
+									this.setState({
+										newReport: {
+											...this.state.newReport,
+											user_id: newValue
+										}
+									})
+								}
+								options={getSelectMenuOptionsObjectReverse(
+									patients
+								)}
+								value={this.state.newReport.user_id}
+							/>
+						</div>
 					</div>
 				</Modal>
 			);
@@ -452,7 +497,6 @@ const MapStateToProps = (state) => {
 };
 
 const MapDispatchToProps = {
-	deleteReport,
 	fetchReports,
 	fetchUsers,
 	postReport,

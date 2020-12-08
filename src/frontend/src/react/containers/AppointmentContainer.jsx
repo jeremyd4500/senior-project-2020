@@ -18,6 +18,7 @@ import {
 } from 'state/actions';
 import {
 	APPOINTMENT_STATUS,
+	APPOINTMENT_STATUS_COLORS,
 	formatDate,
 	getSelectMenuOptionsObjectReverse
 } from 'utils';
@@ -45,15 +46,13 @@ class AppointmentContainer extends Component {
 	}
 
 	componentDidMount() {
-		const { fetchAppointments, fetchUsers, role } = this.props;
+		const { fetchAppointments, fetchUsers } = this.props;
 		fetchAppointments();
 		this.interval = setInterval(() => {
 			this.props.fetchAppointments();
 		}, 20000);
 
-		if (role === 0) {
-			fetchUsers(1);
-		}
+		fetchUsers(1);
 	}
 
 	componentWillUnmount() {
@@ -101,6 +100,7 @@ class AppointmentContainer extends Component {
 							startAccessor='start'
 							endAccessor='end'
 							style={{ height: 500 }}
+							components={this.renderCustomComponents()}
 						/>
 						<div className='AppointmentContainer__splitter'>
 							<p className='AppointmentContainer__splitter-title'>
@@ -244,9 +244,13 @@ class AppointmentContainer extends Component {
 		}
 	};
 
+	renderCustomComponents = () => {
+		return <p>Hello there</p>;
+	};
+
 	renderAppointmentList = () => {
 		const {
-			props: { appointments, deleteAppointment, role }
+			props: { appointments, deleteAppointment, role, users }
 		} = this;
 		if (!appointments.length) {
 			return (
@@ -259,45 +263,88 @@ class AppointmentContainer extends Component {
 				</React.Fragment>
 			);
 		} else {
-			return appointments.map((appointment, index) => {
-				const splitDate = appointment.appointment_date.split('-');
-				const splitTime = appointment.time.split(':');
-				const startDate = new Date(
-					splitDate[0],
-					splitDate[1] - 1,
-					splitDate[2],
-					splitTime[0],
-					splitTime[1],
-					splitTime[2]
-				);
-				const formattedDate = formatDate(startDate);
-				switch (role) {
-					case 0: {
+			return appointments
+				.sort((a, b) => {
+					const dateA = new Date(a.appointment_date);
+					const dateB = new Date(b.appointment_date);
+					if (dateA > dateB) {
+						return -1;
+					} else if (dateA < dateB) {
+						return 1;
+					} else {
+						return 0;
 					}
-					case 1: {
+				})
+				.map((appointment, index) => {
+					const splitDate = appointment.appointment_date.split('-');
+					const splitTime = appointment.time.split(':');
+					const startDate = new Date(
+						splitDate[0],
+						splitDate[1] - 1,
+						splitDate[2],
+						splitTime[0],
+						splitTime[1],
+						splitTime[2]
+					);
+					const formattedDate = formatDate(startDate);
+					const doctors = {};
+					if (users.length > 0) {
+						for (let i = 0; i < users.length; i++) {
+							doctors[
+								users[i].id
+							] = `${users[i].first_name} ${users[i].last_name}`;
+						}
+					}
+					if ([0, 1].includes(role)) {
 						return (
 							<React.Fragment key={index}>
 								<hr />
-								<div className='AppointmentContainer__list-appointment'>
-									<p className='AppointmentContainer__list-appointment-field'>
-										{formattedDate.date} at{' '}
-										{formattedDate.time}
-									</p>
-									<p
-										className='AppointmentContainer__list-appointment-field'
-										style={{ maxWidth: '30%' }}
-									>
-										<b>Reason: </b>
-										{appointment.description}
-									</p>
-									<p className='AppointmentContainer__list-appointment-field'>
-										<b>Status: </b>
-										{APPOINTMENT_STATUS[appointment.status]}
-									</p>
-									<p className='AppointmentContainer__list-appointment-field'>
-										<b>Patient: </b>
-										{`${appointment.first_name} ${appointment.last_name}`}
-									</p>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										justifyContent: 'space-between',
+										alignItems: 'center'
+									}}
+								>
+									<div className='AppointmentContainer__list-appointment'>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Date/Time: </b>
+											{formattedDate.date} at{' '}
+											{formattedDate.time}
+										</p>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Reason: </b>
+											{appointment.description}
+										</p>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Status: </b>
+											<span
+												style={{
+													backgroundColor:
+														APPOINTMENT_STATUS_COLORS[
+															appointment.status
+														]
+												}}
+											>
+												{
+													APPOINTMENT_STATUS[
+														appointment.status
+													]
+												}
+											</span>
+										</p>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Patient: </b>
+											{`${appointment.first_name} ${appointment.last_name}`}
+										</p>
+										{appointment.doctor_id && (
+											<p className='AppointmentContainer__list-appointment-field'>
+												<b>Assigned To: </b>
+												{doctors[appointment.doctor_id]}
+											</p>
+										)}
+									</div>
 									<div className='AppointmentContainer__list-appointment-field'>
 										<FontAwesomeIcon
 											className='AppointmentContainer__list-appointment-field-icon button'
@@ -319,27 +366,52 @@ class AppointmentContainer extends Component {
 								</div>
 							</React.Fragment>
 						);
-					}
-					case 2: {
+					} else {
 						return (
 							<React.Fragment key={index}>
 								<hr />
-								<div className='AppointmentContainer__list-appointment'>
-									<p className='AppointmentContainer__list-appointment-field'>
-										{formattedDate.date} at{' '}
-										{formattedDate.time}
-									</p>
-									<p
-										className='AppointmentContainer__list-appointment-field'
-										style={{ maxWidth: '30%' }}
-									>
-										<b>Reason: </b>
-										{appointment.description}
-									</p>
-									<p className='AppointmentContainer__list-appointment-field'>
-										<b>Status: </b>
-										{APPOINTMENT_STATUS[appointment.status]}
-									</p>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										justifyContent: 'space-between',
+										alignItems: 'center'
+									}}
+								>
+									<div className='AppointmentContainer__list-appointment'>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Date/Time: </b>
+											{formattedDate.date} at{' '}
+											{formattedDate.time}
+										</p>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Reason: </b>
+											{appointment.description}
+										</p>
+										<p className='AppointmentContainer__list-appointment-field'>
+											<b>Status: </b>
+											<span
+												style={{
+													backgroundColor:
+														APPOINTMENT_STATUS_COLORS[
+															appointment.status
+														]
+												}}
+											>
+												{
+													APPOINTMENT_STATUS[
+														appointment.status
+													]
+												}
+											</span>
+										</p>
+										{appointment.doctor_id && (
+											<p className='AppointmentContainer__list-appointment-field'>
+												<b>Assigned To: </b>
+												{doctors[appointment.doctor_id]}
+											</p>
+										)}
+									</div>
 									<div className='AppointmentContainer__list-appointment-field'>
 										<FontAwesomeIcon
 											className='AppointmentContainer__list-appointment-field-icon button'
@@ -355,8 +427,7 @@ class AppointmentContainer extends Component {
 							</React.Fragment>
 						);
 					}
-				}
-			});
+				});
 		}
 	};
 

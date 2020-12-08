@@ -20,7 +20,7 @@ const LandingContainer = () => (
 				<ViewWrapper type='Blogs' path={PATHS.blogs}>
 					<BlogsView />
 				</ViewWrapper>
-				<ViewWrapper type='Reports' path={PATHS.reports}>
+				<ViewWrapper type='Reports & Vitals' path={PATHS.reports}>
 					<ReportsView />
 				</ViewWrapper>
 			</div>

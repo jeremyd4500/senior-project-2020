@@ -262,7 +262,7 @@ class InboxContainer extends Component {
 							},
 							this.state.newMessage.to.value
 						);
-						this.setState({ messageBoxView: none });
+						this.setState({ messageBoxView: 'none' });
 					}}
 					handleCancel={() => {
 						this.setState({
